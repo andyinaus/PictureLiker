@@ -33,6 +33,7 @@ namespace PictureLiker.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(LoginModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -68,6 +69,7 @@ namespace PictureLiker.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(RegistrationModel model, string returnUrl = null)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
