@@ -32,9 +32,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
-                    <form asp-action="LogOutAsync" asp-controller="Account" method="post">
-                        <button class="btn btn-outline-secondary" type="submit">Sign Out</button>
-                    </form>
+                    @if (ViewContext.HttpContext.User?.Identity.IsAuthenticated == true)
+                    {
+                        <form asp-action="LogOutAsync" asp-controller="Account" method="post">
+                            <button class="btn btn-outline-secondary" type="submit">Sign Out</button>
+                        </form>
+                    }
                 </div>
             </div>
         </nav>
