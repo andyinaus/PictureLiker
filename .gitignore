@@ -269,3 +269,4 @@ __pycache__/
 
 # Ignore /wwwroot
 /src/PictureLiker/PictureLiker/wwwroot
+/src/PictureLiker/PictureLiker/Migrations
