@@ -7,9 +7,7 @@
 
 <h2>Please Sign in first ...</h2>
 
-
-
-<form asp-action="Login" method="post">
+<form asp-action="LoginAsync" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
     <div class="form-group">
         <label for="email">Email address:</label>
         <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Please enter your email ..."/>
