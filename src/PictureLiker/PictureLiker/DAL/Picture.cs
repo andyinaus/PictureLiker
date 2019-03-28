@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using PictureLiker.DAL.Repositories;
 
 namespace PictureLiker.DAL
@@ -12,6 +13,7 @@ namespace PictureLiker.DAL
             return this;
         }
 
+        [Required]
         public byte[] Bytes { get; private set; }
     }
 }

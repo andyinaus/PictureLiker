@@ -17,5 +17,6 @@ namespace PictureLiker.DAL
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
     }
 }
