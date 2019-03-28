@@ -15,6 +15,7 @@ namespace PictureLiker.DAL.Repositories
         Task AddAsync(T entity);
         void Delete(T entity);
         void Edit(T entity);
+        Task SaveAsync();
     }
 
     public abstract class EntityBase
