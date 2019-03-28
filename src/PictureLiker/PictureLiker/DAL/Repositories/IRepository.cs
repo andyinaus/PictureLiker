@@ -21,7 +21,6 @@ namespace PictureLiker.DAL.Repositories
     public abstract class EntityBase
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
     }
 }
