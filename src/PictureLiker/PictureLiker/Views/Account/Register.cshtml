@@ -1,13 +1,13 @@
-﻿@model LoginModel
+﻿@model RegistrationModel
 
 @{
-    ViewBag.Title = "Sign In ~";
+    ViewBag.Title = "Registration";
     Layout = "_Layout";
 }
 
-<h2>Please Sign In First ...</h2>
+<h2>Registration</h2>
 
-<form asp-action="LoginAsync" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+<form asp-action="RegisterAsync" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
         <label for="email">Email address:</label>
@@ -19,7 +19,5 @@
         <input asp-for="PreferredName" type="text" class="form-control" id="name" placeholder="Please enter your preferred name ..." />
         @Html.ValidationMessageFor(m => m.PreferredName, null, new { @style = "color: red" })
     </div>
-
-    <button type="submit" class="btn btn-primary">Sign In</button>
-    <a asp-action="Register">Sign Up</a>
+    <button type="submit" class="btn btn-primary">Register</button>
 </form>
