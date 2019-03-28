@@ -7,8 +7,5 @@ namespace PictureLiker.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Required]
-        public string PreferredName { get; set; }
     }
 }
