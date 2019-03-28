@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using PictureLiker.DAL.Repositories;
 
 namespace PictureLiker.DAL
 {
-    public class User
+    public class User : EntityBase
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; private set; }
     }
 }
