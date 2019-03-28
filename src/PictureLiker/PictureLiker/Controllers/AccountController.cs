@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens.Saml;
+using PictureLiker.Authentication;
 using PictureLiker.DAL;
 using PictureLiker.DAL.Repositories;
 using PictureLiker.Models;
@@ -113,7 +114,7 @@ namespace PictureLiker.Controllers
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "GeneralUser"),
+                new Claim(ClaimTypes.Role, RoleTypes.GeneralUser),
                 new Claim(ClaimTypes.AuthenticationMethod, SamlConstants.AuthenticationMethods.PasswordString)
             };
 
