@@ -44,6 +44,14 @@ namespace PictureLiker.Controllers
             return Redirect("/");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private static ClaimsIdentity GetClaimsIdentity(string name, string email)
         {
             var claims = new List<Claim>
