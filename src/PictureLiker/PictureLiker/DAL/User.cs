@@ -12,6 +12,10 @@ namespace PictureLiker.DAL
         [Required]
         public string Email { get; private set; }
 
+        [DataType(DataType.Text)]
+        [Required]
+        public string Name { get; private set; }
+
         public User SetEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
@@ -27,6 +31,15 @@ namespace PictureLiker.DAL
             {
                 throw new ArgumentException("Invalid email address.", nameof(email));
             }
+        }
+
+        public User SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
+
+            Name = name;
+
+            return this;
         }
     }
 }

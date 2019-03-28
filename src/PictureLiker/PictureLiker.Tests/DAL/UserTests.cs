@@ -47,5 +47,36 @@ namespace PictureLiker.Tests.DAL
 
             Assert.Equal(validEmail, user.Email);
         }
+
+        [Fact]
+        public void SetNameWithNullNameShouldThrowArgumentNullException()
+        {
+            var user = new User();
+
+            Action action = () => user.SetName(null);
+
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void SetNameWithWhiteSpaceNameShouldThrowArgumentNullException()
+        {
+            var user = new User();
+
+            Action action = () => user.SetName("    ");
+
+            Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void SetNameWithValidNameShouldSetCorrectly()
+        {
+            var user = new User();
+            const string validName = "Andy";
+
+            user.SetName(validName);
+
+            Assert.Equal(validName, user.Name);
+        }
     }
 }
