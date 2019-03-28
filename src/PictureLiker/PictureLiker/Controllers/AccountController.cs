@@ -33,7 +33,7 @@ namespace PictureLiker.Controllers
 
             //todo: save user info to db
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            await HttpContext.SignInAsync(Startup.DefaultAuthenticationScheme,
                 new ClaimsPrincipal(GetClaimsIdentity(model.PreferredName, model.Email)));
 
             if (Url.IsLocalUrl(returnUrl))
@@ -47,7 +47,7 @@ namespace PictureLiker.Controllers
         [HttpPost]
         public async Task<IActionResult> LogOutAsync()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(Startup.DefaultAuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
         }

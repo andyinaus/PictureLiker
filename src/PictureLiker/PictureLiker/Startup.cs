@@ -13,6 +13,7 @@ namespace PictureLiker
 {
     public class Startup
     {
+        public const string DefaultAuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         private const string DefaultConnectionStringName = "PictureLikerDB";
 
         public Startup(IConfiguration configuration)
@@ -34,8 +35,8 @@ namespace PictureLiker
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+            services.AddAuthentication(DefaultAuthenticationScheme)
+                .AddCookie(DefaultAuthenticationScheme, options =>
                 {
                     options.Cookie.HttpOnly = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
