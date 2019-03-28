@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PictureLiker.DAL;
+using PictureLiker.DAL.Repositories;
 
 namespace PictureLiker
 {
@@ -34,6 +35,7 @@ namespace PictureLiker
             });
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddAuthentication(DefaultAuthenticationScheme)
                 .AddCookie(DefaultAuthenticationScheme, options =>
