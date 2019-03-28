@@ -14,11 +14,6 @@
         <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Please enter your email ..." />
         @Html.ValidationMessageFor(m => m.Email, null, new { @style = "color: red" })
     </div>
-    <div class="form-group">
-        <label for="name">Preferred Name:</label>
-        <input asp-for="PreferredName" type="text" class="form-control" id="name" placeholder="Please enter your preferred name ..." />
-        @Html.ValidationMessageFor(m => m.PreferredName, null, new { @style = "color: red" })
-    </div>
 
     <button type="submit" class="btn btn-primary">Sign In</button>
     <a asp-action="Register">Sign Up</a>
