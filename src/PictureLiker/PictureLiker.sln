@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLiker", "PictureLiker\PictureLiker.csproj", "{8767B628-B5EF-4EBC-9FC6-E56BECC4008E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureLiker.Tests", "PictureLiker.Tests\PictureLiker.Tests.csproj", "{37BD2B4E-1F30-4E59-992F-9374E396B221}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8767B628-B5EF-4EBC-9FC6-E56BECC4008E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8767B628-B5EF-4EBC-9FC6-E56BECC4008E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8767B628-B5EF-4EBC-9FC6-E56BECC4008E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37BD2B4E-1F30-4E59-992F-9374E396B221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37BD2B4E-1F30-4E59-992F-9374E396B221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37BD2B4E-1F30-4E59-992F-9374E396B221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37BD2B4E-1F30-4E59-992F-9374E396B221}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
