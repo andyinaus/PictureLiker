@@ -1,11 +1,11 @@
 ﻿@model LoginModel
 
 @{
-    ViewBag.Title = "Sign in ~";
+    ViewBag.Title = "Sign In ~";
     Layout = "_Layout";
 }
 
-<h2>Please Sign in first ...</h2>
+<h2>Please Sign In First ...</h2>
 
 <form asp-action="LoginAsync" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
     <div class="form-group">
@@ -18,5 +18,5 @@
         <input asp-for="PreferredName" type="text" class="form-control" id="name" placeholder="Please enter your preferred name ..."/>
         @Html.ValidationMessageFor(m => m.PreferredName, null, new { @style = "color: red" })
     </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="submit" class="btn btn-primary">Sign In</button>
 </form>
