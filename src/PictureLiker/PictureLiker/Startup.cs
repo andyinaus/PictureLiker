@@ -4,14 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PictureLiker.DAL;
 
 namespace PictureLiker
 {
     public class Startup
     {
+        private const string PictureLikerConnectionStringName = "PictureLikerDB";
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -29,6 +33,7 @@ namespace PictureLiker
         {
             // Add framework services.
             services.AddMvc();
+            services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(PictureLikerConnectionStringName)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
