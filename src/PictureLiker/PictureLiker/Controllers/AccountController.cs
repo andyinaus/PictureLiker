@@ -86,7 +86,8 @@ namespace PictureLiker.Controllers
 
             var user = new User()
                 .SetEmail(model.Email)
-                .SetName(model.PreferredName);
+                .SetName(model.PreferredName)
+                .SetRole(RoleTypes.GeneralUser);
 
             await _userRepository.AddAsync(user);
             await _userRepository.SaveAsync();
@@ -114,7 +115,7 @@ namespace PictureLiker.Controllers
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, RoleTypes.GeneralUser),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.AuthenticationMethod, SamlConstants.AuthenticationMethods.PasswordString)
             };
 
