@@ -1,49 +1,52 @@
 using System;
+using System.Threading.Tasks;
+using Moq;
 using Xunit;
 using PictureLiker.DAL;
+using PictureLiker.Services;
 
 namespace PictureLiker.Tests.DAL
 {
     public class UserTests
     {
         [Fact]
-        public void SetEmailWithNullEmailShouldThrowArgumentNullException()
+        public async Task SetEmailWithNullEmailShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
-            Action action = () => user.SetEmail(null);
+            Func<Task> target = () => user.SetEmail(null);
 
-            Assert.Throws<ArgumentNullException>(action);
+            await Assert.ThrowsAsync<ArgumentNullException>(target);
         }
 
         [Fact]
-        public void SetEmailWithWhiteSpaceEmailShouldThrowArgumentNullException()
+        public async Task SetEmailWithWhiteSpaceEmailShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
-            Action action = () => user.SetEmail("    ");
+            Func<Task> target = () => user.SetEmail("    ");
 
-            Assert.Throws<ArgumentNullException>(action);
+            await Assert.ThrowsAsync<ArgumentNullException>(target);
         }
 
         [Fact]
-        public void SetEmailWithInvalidEmailShouldThrowArgumentException()
+        public async Task SetEmailWithInvalidEmailShouldThrowArgumentException()
         {
-            var user = new User();
+            var user = GetTestUser();
             const string invalidEmail = "hahaahhahdha";
 
-            Action action = () => user.SetEmail(invalidEmail);
+            Func<Task> target = () => user.SetEmail(invalidEmail);
 
-            Assert.Throws<ArgumentException>(action);
+            await Assert.ThrowsAsync<ArgumentException>(target);
         }
 
         [Fact]
-        public void SetEmailWithValidEmailShouldSetCorrectly()
+        public async Task SetEmailWithValidEmailShouldSetCorrectly()
         {
-            var user = new User();
+            var user = GetTestUser();
             const string validEmail = "a@gmail.com";
 
-            user.SetEmail(validEmail);
+            await user.SetEmail(validEmail);
 
             Assert.Equal(validEmail, user.Email);
         }
@@ -51,7 +54,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetNameWithNullNameShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             Action action = () => user.SetName(null);
 
@@ -61,7 +64,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetNameWithWhiteSpaceNameShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             Action action = () => user.SetName("    ");
 
@@ -71,7 +74,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetNameWithValidNameShouldSetCorrectly()
         {
-            var user = new User();
+            var user = GetTestUser();
             const string validName = "Andy";
 
             user.SetName(validName);
@@ -82,7 +85,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetRoleWithNullRoleShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             Action action = () => user.SetRole(null);
 
@@ -92,7 +95,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetRoleWithWhiteSpaceRoleShouldThrowArgumentNullException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             Action action = () => user.SetRole("    ");
 
@@ -102,7 +105,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetRoleWithInvalidRoleShouldThrowArgumentException()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             Action action = () => user.SetRole("SuperUser");
 
@@ -112,7 +115,7 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetRoleWithAdminRoleShouldSetCorrectly()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             user.SetRole(Authentication.RoleTypes.Administrator);
 
@@ -122,11 +125,16 @@ namespace PictureLiker.Tests.DAL
         [Fact]
         public void SetRoleWithGeneralUserRoleShouldSetCorrectly()
         {
-            var user = new User();
+            var user = GetTestUser();
 
             user.SetRole(Authentication.RoleTypes.GeneralUser);
 
             Assert.Equal(Authentication.RoleTypes.GeneralUser, user.Role);
+        }
+
+        private static User GetTestUser(IDomainQuery domainQuery = null)
+        {
+            return new User(domainQuery ?? new Mock<IDomainQuery>().Object);
         }
     }
 }
