@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PictureLiker.DAL;
 using PictureLiker.DAL.Repositories;
+using PictureLiker.Extensions;
 
 namespace PictureLiker
 {
@@ -88,7 +89,7 @@ namespace PictureLiker
                 var userRepository = scope.ServiceProvider.GetService<IRepository<User>>();
 
                 if (userRepository.FirstOrDefault(
-                        u => u.Email.Equals(adminEmail, StringComparison.InvariantCultureIgnoreCase)) == null)
+                        u => u.Email.EqualsIgnoreCase(adminEmail)) == null)
                 {
                     var adminUser = new User();
 

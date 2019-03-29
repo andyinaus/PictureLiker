@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PictureLiker.DAL.Repositories;
+using PictureLiker.Extensions;
 
 namespace PictureLiker.DAL
 {
@@ -50,8 +51,8 @@ namespace PictureLiker.DAL
         {
             if (string.IsNullOrWhiteSpace(role)) throw new ArgumentNullException(nameof(role));
 
-            if (!role.Equals(Authentication.RoleTypes.GeneralUser, StringComparison.InvariantCultureIgnoreCase) &&
-                !role.Equals(Authentication.RoleTypes.Administrator, StringComparison.InvariantCultureIgnoreCase))
+            if (!role.EqualsIgnoreCase(Authentication.RoleTypes.GeneralUser) &&
+                !role.EqualsIgnoreCase(Authentication.RoleTypes.Administrator))
             {
                 throw new ArgumentException("Invalid user role.", nameof(role));
             }

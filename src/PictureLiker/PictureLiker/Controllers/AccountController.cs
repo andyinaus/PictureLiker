@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens.Saml;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
 using PictureLiker.DAL.Repositories;
+using PictureLiker.Extensions;
 using PictureLiker.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -43,7 +44,7 @@ namespace PictureLiker.Controllers
 
             if (!ModelState.IsValid) return View(nameof(Login), model);
 
-            var user = await _userRepository.FirstOrDefaultAsync(u => u.Email.Equals(model.Email, StringComparison.InvariantCultureIgnoreCase));
+            var user = await _userRepository.FirstOrDefaultAsync(u => u.Email.EqualsIgnoreCase(model.Email));
 
             if (user == null)
             {
