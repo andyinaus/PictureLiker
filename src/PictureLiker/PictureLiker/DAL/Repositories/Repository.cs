@@ -67,5 +67,10 @@ namespace PictureLiker.DAL.Repositories
         {
             await _dbContext.SaveChangesAsync();
         }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }
