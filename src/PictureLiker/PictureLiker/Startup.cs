@@ -52,6 +52,8 @@ namespace PictureLiker
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            AddAdminUserIfNotExist(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -75,6 +77,29 @@ namespace PictureLiker
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void AddAdminUserIfNotExist(IApplicationBuilder app)
+        {
+            const string adminEmail = "admin@gmail.com";
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var userRepository = scope.ServiceProvider.GetService<IRepository<User>>();
+
+                if (userRepository.FirstOrDefault(
+                        u => u.Email.Equals(adminEmail, StringComparison.InvariantCultureIgnoreCase)) == null)
+                {
+                    var adminUser = new User();
+
+                    adminUser.SetName("Admin")
+                        .SetEmail(adminEmail)
+                        .SetRole(Authentication.RoleTypes.Administrator);
+
+                    userRepository.Add(adminUser);
+                    userRepository.Save();
+                }
+            }
         }
     }
 }
