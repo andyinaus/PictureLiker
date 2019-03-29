@@ -48,6 +48,11 @@ namespace PictureLiker.DAL.Repositories
             await _dbContext.Set<T>().AddAsync(entity);
         }
 
+        public void Add(T entity)
+        {
+            _dbContext.Set<T>().Add(entity);
+        }
+
         public void Delete(T entity)
         {
             _dbContext.Remove(entity);

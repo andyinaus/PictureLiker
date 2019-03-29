@@ -14,6 +14,7 @@ namespace PictureLiker.DAL.Repositories
         Task<IEnumerable<T>> ListAsync();
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate);
         Task AddAsync(T entity);
+        void Add(T entity);
         void Delete(T entity);
         void Edit(T entity);
         Task SaveAsync();
