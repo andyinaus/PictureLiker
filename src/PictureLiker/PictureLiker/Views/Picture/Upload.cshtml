@@ -1,0 +1,29 @@
+﻿@using PictureLiker.Controllers
+@model UploadModel
+
+@{
+    ViewBag.Title = "Upload Your Pictures";
+    Layout = "_Layout";
+
+    var maximumTotalFileSize = PictureController.FileConstraints.MaximumTotalFileSizeInBytes / (1024 * 1024);
+}
+
+<h2>Upload Your Picture(s)</h2>
+
+<form asp-controller="Picture" asp-action="UploadAsync" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files:</p>
+            <p>Constraints:</p>
+            <ul>
+                <li>Maximum number of files you can upload each time is @PictureController.FileConstraints.MaximumNumberOfFilesToBeUploaded</li>
+                <li>Maximum total size of files cannot exceed @maximumTotalFileSize MB</li>
+            </ul>
+            <!-- Be aware, IE, Microsoft Edge and some versions of Safari may not support "accept" attribute. -->
+            <input asp-for="Files" type="file" name="files" accept="image/*" multiple />
+            @Html.ValidationMessageFor(m => m.Files, null, new { @style = "color: red" })
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
