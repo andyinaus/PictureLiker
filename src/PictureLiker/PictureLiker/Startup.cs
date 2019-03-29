@@ -38,6 +38,7 @@ namespace PictureLiker
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IDomainQuery), typeof(DomainQuery));
 
             services.AddAuthentication(DefaultAuthenticationScheme)
                 .AddCookie(DefaultAuthenticationScheme, options =>
