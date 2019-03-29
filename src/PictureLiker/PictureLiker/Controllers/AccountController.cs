@@ -85,13 +85,13 @@ namespace PictureLiker.Controllers
                 return View(nameof(Register), model);
             }
 
-            var user = new User()
-                .SetEmail(model.Email)
-                .SetName(model.PreferredName)
-                .SetRole(RoleTypes.GeneralUser);
+            //var user = new User()
+            //    .SetEmail(model.Email)
+            //    .SetName(model.PreferredName)
+            //    .SetRole(RoleTypes.GeneralUser);
 
-            await _userRepository.AddAsync(user);
-            await _userRepository.SaveAsync();
+            //await _userRepository.AddAsync(user);
+            //await _userRepository.SaveAsync();
 
             return Redirect("/");
         }
