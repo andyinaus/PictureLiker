@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PictureLiker.DAL;
 using PictureLiker.DAL.Repositories;
 using PictureLiker.Extensions;
+using PictureLiker.Factories;
 using PictureLiker.Services;
 
 namespace PictureLiker
@@ -34,11 +35,12 @@ namespace PictureLiker
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            }); 
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IDomainQuery), typeof(DomainQuery));
+            services.AddScoped(typeof(IEntityFactory), typeof(EntityFactory));
 
             services.AddAuthentication(DefaultAuthenticationScheme)
                 .AddCookie(DefaultAuthenticationScheme, options =>
