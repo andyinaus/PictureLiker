@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PictureLiker.DAL;
-using PictureLiker.DAL.Repositories;
 using PictureLiker.Extensions;
 using PictureLiker.Factories;
 using PictureLiker.Services;
