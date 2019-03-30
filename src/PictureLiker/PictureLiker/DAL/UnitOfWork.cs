@@ -9,6 +9,7 @@ namespace PictureLiker.DAL
         private readonly PictureLikerContext _dbContext;
         private IRepository<User> _userRepository;
         private IRepository<Picture> _pictureRepository;
+        private IRepository<Preference> _preferenceRepository;
 
         public UnitOfWork(PictureLikerContext context)
         {
@@ -38,6 +39,19 @@ namespace PictureLiker.DAL
                 }
 
                 return _pictureRepository;
+            }
+        }
+
+        public IRepository<Preference> PreferenceRepository
+        {
+            get
+            {
+                if (_preferenceRepository == null)
+                {
+                    _preferenceRepository = new Repository<Preference>(_dbContext);
+                }
+
+                return _preferenceRepository;
             }
         }
 

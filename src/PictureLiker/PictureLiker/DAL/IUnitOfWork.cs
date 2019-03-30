@@ -7,6 +7,7 @@ namespace PictureLiker.DAL
     {
         IRepository<User> UseRepository { get; }
         IRepository<Picture> PictureRepository { get; }
+        IRepository<Preference> PreferenceRepository { get; }
         void Save();
         Task SaveAsync();
     }
