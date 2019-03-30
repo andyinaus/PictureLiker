@@ -37,13 +37,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (isUserAuthenticated == true && User.HasClaim(ClaimTypes.Role, RoleTypes.Administrator))
+                        @if (isUserAuthenticated == true)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Picture" asp-action="Upload">Upload Picture(s)</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Picture</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-dark" asp-controller="Picture" asp-action="Index">Gallery</a>
+                                    @if (User.HasClaim(ClaimTypes.Role, RoleTypes.Administrator))
+                                    {
+                                        <a class="dropdown-item text-dark" asp-controller="Picture" asp-action="Upload">Upload New Picture(s)</a>
+                                    }
+                                </div>
                             </li>
                         }
                     </ul>
+
                     @if (isUserAuthenticated == true)
                     {
                         <form asp-action="LogOutAsync" asp-controller="Account" method="post">
