@@ -34,7 +34,8 @@ else
                             </button>
                         </form>
                         <form class="float-right" asp-action="" method="post">
-                            <button type="submit" class="btn" style="color: grey"
+                            <input type="hidden" asp-for="Id" />
+                            <button asp-action="Like" type="submit" class="btn" style="color: grey"
                                     onmouseout="this.style.color = 'grey';"
                                     onmouseover="this.style.color = 'red';">
                                 <i class="fa fa-heart fa-3x"></i>

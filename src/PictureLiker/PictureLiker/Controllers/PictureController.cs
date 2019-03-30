@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
+using PictureLiker.Extensions;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
@@ -34,6 +35,22 @@ namespace PictureLiker.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Like(PictureModel model)
+        {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            if (await IsPictureLiked(model.Id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var preference = new Preference(User.GetUserId(), model.Id);
+            await _unitOfWork.PreferenceRepository.AddAsync(preference);
+            await _unitOfWork.SaveAsync();
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -78,6 +95,11 @@ namespace PictureLiker.Controllers
             await _unitOfWork.SaveAsync();
 
             return View("Upload");
+        }
+
+        private async Task<bool> IsPictureLiked(int pictureId)
+        {
+            return await _unitOfWork.PreferenceRepository.FirstOrDefaultAsync(p => p.PictureId == pictureId && p.UserId == User.GetUserId()) != null;
         }
 
         public static class FileConstraints
