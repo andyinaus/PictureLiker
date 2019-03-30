@@ -48,6 +48,11 @@ namespace PictureLiker.DAL.Repositories
                 .ToListAsync();
         }
 
+        public IEnumerable<T> FromSql(string query, object[] parameters)
+        {
+            return _dbContext.Set<T>().FromSql(query, parameters);
+        }
+
         public async Task AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
