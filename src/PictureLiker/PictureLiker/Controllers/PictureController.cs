@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
 using PictureLiker.Extensions;
+using PictureLiker.Factories;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
 {
     public class PictureController : Controller
     {
+        private readonly IEntityFactory _entityFactory;
         private readonly IUnitOfWork _unitOfWork;
         
-        public PictureController(IUnitOfWork unitOfWork)
+        public PictureController(IUnitOfWork unitOfWork, IEntityFactory entityFactory)
         {
+            _entityFactory = entityFactory ?? throw new ArgumentNullException(nameof(entityFactory));
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
@@ -48,7 +51,7 @@ namespace PictureLiker.Controllers
                 return RedirectToAction("Index");
             }
 
-            var preference = new Preference(User.GetUserId(), model.Id)
+            var preference = _entityFactory.GetPreference(User.GetUserId(), model.Id)
                 .SetIsLiked(true);
             await _unitOfWork.PreferenceRepository.AddAsync(preference);
             await _unitOfWork.SaveAsync();
@@ -67,7 +70,7 @@ namespace PictureLiker.Controllers
                 return RedirectToAction("Index");
             }
 
-            var preference = new Preference(User.GetUserId(), model.Id)
+            var preference = _entityFactory.GetPreference(User.GetUserId(), model.Id)
                 .SetIsLiked(false);
             await _unitOfWork.PreferenceRepository.AddAsync(preference);
             await _unitOfWork.SaveAsync();
@@ -108,7 +111,7 @@ namespace PictureLiker.Controllers
                     {
                         await formFile.CopyToAsync(memoryStream);
 
-                        var picture = new Picture().SetBytes(memoryStream.ToArray());
+                        var picture = _entityFactory.GetPicture().SetBytes(memoryStream.ToArray());
                         await _unitOfWork.PictureRepository.AddAsync(picture);
                     }
                 }
