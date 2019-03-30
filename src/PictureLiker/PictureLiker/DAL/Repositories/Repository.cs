@@ -26,6 +26,11 @@ namespace PictureLiker.DAL.Repositories
             return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
+        public Task<T> FirstOrDefaultAsync()
+        {
+            return _dbContext.Set<T>().FirstOrDefaultAsync();
+        }
+
         public T FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
             return _dbContext.Set<T>().FirstOrDefault(predicate);

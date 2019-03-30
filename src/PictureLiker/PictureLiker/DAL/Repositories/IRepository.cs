@@ -10,6 +10,7 @@ namespace PictureLiker.DAL.Repositories
     {
         Task<T> GetByIdAsync(int id);
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        Task<T> FirstOrDefaultAsync();
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> ListAsync();
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate);
