@@ -14,6 +14,8 @@ namespace PictureLiker.DAL
     {
         private readonly IDomainQuery _domainQuery;
 
+        private User() { }
+
         public User(IDomainQuery domainQuery)
         {
             _domainQuery = domainQuery ?? throw new ArgumentNullException(nameof(domainQuery));

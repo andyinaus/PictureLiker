@@ -11,7 +11,9 @@ using PictureLiker.Authentication;
 using PictureLiker.DAL;
 using PictureLiker.DAL.Repositories;
 using PictureLiker.Extensions;
+using PictureLiker.Factories;
 using PictureLiker.Models;
+using PictureLiker.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +21,14 @@ namespace PictureLiker.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IDomainQuery _domainQuery;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEntityFactory _entityFactory;
 
-        public AccountController(IRepository<User> userRepository)
+        public AccountController(IUnitOfWork unitOfWork, IEntityFactory entityFactory, IDomainQuery domainQuery)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _entityFactory = entityFactory ?? throw new ArgumentNullException(nameof(entityFactory));
         }
 
         [HttpGet]
@@ -44,7 +49,7 @@ namespace PictureLiker.Controllers
 
             if (!ModelState.IsValid) return View(nameof(Login), model);
 
-            var user = await _userRepository.FirstOrDefaultAsync(u => u.Email.EqualsIgnoreCase(model.Email));
+            var user = await _unitOfWork.UseRepository.FirstOrDefaultAsync(u => u.Email.EqualsIgnoreCase(model.Email));
 
             if (user == null)
             {
@@ -77,7 +82,7 @@ namespace PictureLiker.Controllers
             if (model == null) throw new ArgumentNullException(nameof(model));
 
             if (!ModelState.IsValid) return View(nameof(Register), model);
-
+            // TODO: duplicated with domain error, implement better error handling 
             if (await IsEmailInUse(model.Email))
             {
                 ModelState.AddModelError(nameof(model.Email), "Specified email is already in use.");
@@ -85,13 +90,14 @@ namespace PictureLiker.Controllers
                 return View(nameof(Register), model);
             }
 
-            //var user = new User()
-            //    .SetEmail(model.Email)
-            //    .SetName(model.PreferredName)
-            //    .SetRole(RoleTypes.GeneralUser);
+            var user = _entityFactory.GetUser()
+                .SetName(model.PreferredName)
+                .SetRole(RoleTypes.GeneralUser);
 
-            //await _userRepository.AddAsync(user);
-            //await _userRepository.SaveAsync();
+            await user.SetEmail(model.Email);
+
+            await _unitOfWork.UseRepository.AddAsync(user);
+            await _unitOfWork.SaveAsync();
 
             return Redirect("/");
         }
@@ -106,7 +112,7 @@ namespace PictureLiker.Controllers
 
         private async Task<bool> IsEmailInUse(string email)
         {
-            return (await _userRepository.ListAsync(u => u.Email.ToLower().Equals(email.ToLower()))).Any();
+            return (await _unitOfWork.UseRepository.ListAsync(u => u.Email.ToLower().Equals(email.ToLower()))).Any();
         }
 
         private static ClaimsIdentity CreateClaimsIdentity(User user)

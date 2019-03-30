@@ -6,19 +6,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
-using PictureLiker.DAL.Repositories;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
 {
     public class PictureController : Controller
     {
-        private readonly IRepository<Picture> _pictureRepository;
+        private readonly IUnitOfWork _unitOfWork;
         
-        public PictureController(IRepository<Picture> pictureRepository)
+        public PictureController(IUnitOfWork unitOfWork)
         {
-            _pictureRepository = pictureRepository ?? throw new ArgumentNullException(nameof(pictureRepository));
-            
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         [HttpGet]
@@ -55,12 +53,12 @@ namespace PictureLiker.Controllers
                         await formFile.CopyToAsync(memoryStream);
 
                         var picture = new Picture().SetBytes(memoryStream.ToArray());
-                        await _pictureRepository.AddAsync(picture);
+                        await _unitOfWork.PictureRepository.AddAsync(picture);
                     }
                 }
             }
 
-            await _pictureRepository.SaveAsync();
+            await _unitOfWork.SaveAsync();
 
             return View("Upload");
         }

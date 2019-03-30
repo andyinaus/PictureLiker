@@ -39,6 +39,7 @@ namespace PictureLiker
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IDomainQuery), typeof(DomainQuery));
             services.AddScoped(typeof(IEntityFactory), typeof(EntityFactory));
 
@@ -86,19 +87,17 @@ namespace PictureLiker
 
         private static void AddAdminUserIfNotExist(IApplicationBuilder app)
         {
-            const string adminEmail = "admin@gmail.com";
-
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var userRepository = scope.ServiceProvider.GetService<IRepository<User>>();
+                var factory = scope.ServiceProvider.GetService<IEntityFactory>();
 
                 if (userRepository.FirstOrDefault(
-                        u => u.Email.EqualsIgnoreCase(adminEmail)) == null)
+                        u => u.Role.EqualsIgnoreCase(Authentication.RoleTypes.Administrator)) == null)
                 {
-                    var adminUser = new User(scope.ServiceProvider.GetService<IDomainQuery>());
-
-                    adminUser.SetName("Admin")
-                        .SetEmail(adminEmail).Result
+                    var adminUser = factory.GetUser()
+                        .SetName("Admin")
+                        .SetEmail("admin@gmail.com").Result
                         .SetRole(Authentication.RoleTypes.Administrator);
 
                     userRepository.Add(adminUser);
