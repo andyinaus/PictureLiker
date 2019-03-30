@@ -22,9 +22,9 @@ namespace PictureLiker.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var picture = await _unitOfWork.PictureRepository.FirstOrDefaultAsync();
+            var picture = GetNextAvailableRandomPicture();
 
             if (picture == null) return View();
 
@@ -122,6 +122,15 @@ namespace PictureLiker.Controllers
         private async Task<bool> IsPictureRated(int pictureId)
         {
             return await _unitOfWork.PreferenceRepository.FirstOrDefaultAsync(p => p.PictureId == pictureId && p.UserId == User.GetUserId()) != null;
+        }
+
+        private Picture GetNextAvailableRandomPicture()
+        {
+            return _unitOfWork.PictureRepository.FromSql(
+                $"SELECT TOP 1 {nameof(Picture.Id)}, {nameof(Picture.Bytes)} " +
+                "FROM (SELECT * FROM Pictures LEFT JOIN (SELECT PictureId FROM Preferences WHERE UserId = {0}) AS TEMP ON TEMP.PictureId = Id WHERE TEMP.PictureId IS NULL) AS AvailbalePictures " +
+                "ORDER BY NEWID()", User.GetUserId())
+                .FirstOrDefault();
         }
 
         public static class FileConstraints
