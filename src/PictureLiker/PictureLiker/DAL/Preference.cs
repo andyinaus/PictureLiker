@@ -6,6 +6,14 @@ namespace PictureLiker.DAL
 {
     public class Preference : EntityBase
     {
+        private Preference() { }
+
+        public Preference(int userId, int pictureId)
+        {
+            UserId = userId;
+            PictureId = pictureId;
+        }
+
         [ForeignKey(nameof(User))]
         public int UserId { get; private set; }
 
@@ -17,6 +25,13 @@ namespace PictureLiker.DAL
         public Picture Picture { get; private set; }
 
         [Required]
-        public bool Like { get; private set; }
+        public bool IsLiked { get; private set; }
+
+        public Preference SetIsLiked(bool isLiked)
+        {
+            IsLiked = isLiked;
+
+            return this;
+        }
     }
 }
