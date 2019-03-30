@@ -23,7 +23,7 @@
                             <p>Upload one or more files:</p>
 
                             <!-- Be aware, IE, Microsoft Edge and some versions of Safari may not support "accept" attribute. -->
-                            <input asp-for="Files" type="file" name="files" accept="image/*" multiple />
+                            <input asp-for="Files" type="file" name="files" accept="image/*" multiple required/>
                             @Html.ValidationMessageFor(m => m.Files, null, new { @style = "color: red" })
                         </div>
                         <button type="submit" class="btn btn-primary">Upload</button>
