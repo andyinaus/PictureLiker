@@ -18,5 +18,15 @@ namespace PictureLiker.Factories
         {
             return new User(_domainQuery);
         }
+
+        public Preference GetPreference(int userId, int pictureId)
+        {
+            return new Preference(userId, pictureId);
+        }
+
+        public Picture GetPicture()
+        {
+            return new Picture();
+        }
     }
 }
