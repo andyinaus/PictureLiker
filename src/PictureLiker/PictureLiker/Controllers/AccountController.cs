@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens.Saml;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
-using PictureLiker.DAL.Repositories;
 using PictureLiker.Extensions;
 using PictureLiker.Factories;
 using PictureLiker.Models;
