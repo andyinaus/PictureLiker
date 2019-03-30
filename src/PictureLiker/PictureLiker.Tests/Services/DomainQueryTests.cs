@@ -18,9 +18,9 @@ namespace PictureLiker.Tests.Services
             var user = new User(new Mock<IDomainQuery>().Object);
             user.SetEmail(email).Wait();
 
-            var userRepository = GetTestUserRepositoryWith(user);
+            var unitOfWork = GetTestUnitOfWorkWith(GetTestUserRepositoryWith(user));
 
-            var domainQuery = new DomainQuery(userRepository);
+            var domainQuery = new DomainQuery(unitOfWork);
 
             var isInUse = domainQuery.IsEmailInUse(email).Result;
 
@@ -30,14 +30,22 @@ namespace PictureLiker.Tests.Services
         [Fact]
         public void IsEmailAddressInUse_WhenEmailIsNotInUse_ShouldReturnFalse()
         {
-            var userRepository = GetTestUserRepositoryWith(null);
+            var unitOfWork = GetTestUnitOfWorkWith(GetTestUserRepositoryWith(null));
 
-            var domainQuery = new DomainQuery(userRepository);
+            var domainQuery = new DomainQuery(unitOfWork);
 
             const string email = "super@gmail.com";
             var isInUse = domainQuery.IsEmailInUse(email).Result;
 
             Assert.False(isInUse);
+        }
+
+        private static IUnitOfWork GetTestUnitOfWorkWith(IRepository<User> userRepository)
+        {
+            var unitOfWork = new Mock<IUnitOfWork>();
+            unitOfWork.Setup(u => u.UseRepository).Returns(userRepository);
+
+            return unitOfWork.Object;
         }
 
         private static IRepository<User> GetTestUserRepositoryWith(User user)

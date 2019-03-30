@@ -6,8 +6,6 @@ namespace PictureLiker.DAL
 {
     public class Picture : EntityBase
     {
-        private Picture() { }
-
         public Picture SetBytes(byte[] bytes)
         {
             Bytes = bytes ?? throw new ArgumentNullException(nameof(bytes));

@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PictureLiker.DAL;
-using PictureLiker.DAL.Repositories;
 using PictureLiker.Extensions;
 
 namespace PictureLiker.Services
 {
     public class DomainQuery : IDomainQuery 
     {
-        private readonly IRepository<User> _useRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DomainQuery(IRepository<User> useRepository)
+        public DomainQuery(IUnitOfWork unitOfWork)
         {
-            _useRepository = useRepository ?? throw new ArgumentNullException(nameof(useRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<bool> IsEmailInUse(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
 
-            return await _useRepository.FirstOrDefaultAsync(u => u.Email.EqualsIgnoreCase(email)) != null;
+            return await _unitOfWork.UseRepository.FirstOrDefaultAsync(u => u.Email.EqualsIgnoreCase(email)) != null;
         }
     }
 }

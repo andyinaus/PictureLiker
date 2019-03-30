@@ -38,7 +38,6 @@ namespace PictureLiker
             }); 
 
             services.AddDbContext<PictureLikerContext>(o => o.UseSqlServer(Configuration.GetConnectionString(DefaultConnectionStringName)));
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IDomainQuery), typeof(DomainQuery));
             services.AddScoped(typeof(IEntityFactory), typeof(EntityFactory));
@@ -89,10 +88,10 @@ namespace PictureLiker
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var userRepository = scope.ServiceProvider.GetService<IRepository<User>>();
+                var unitOfWork = scope.ServiceProvider.GetService<IUnitOfWork>();
                 var factory = scope.ServiceProvider.GetService<IEntityFactory>();
 
-                if (userRepository.FirstOrDefault(
+                if (unitOfWork.UseRepository.FirstOrDefault(
                         u => u.Role.EqualsIgnoreCase(Authentication.RoleTypes.Administrator)) == null)
                 {
                     var adminUser = factory.GetUser()
@@ -100,8 +99,8 @@ namespace PictureLiker
                         .SetEmail("admin@gmail.com").Result
                         .SetRole(Authentication.RoleTypes.Administrator);
 
-                    userRepository.Add(adminUser);
-                    userRepository.Save();
+                    unitOfWork.UseRepository.Add(adminUser);
+                    unitOfWork.Save();
                 }
             }
         }
