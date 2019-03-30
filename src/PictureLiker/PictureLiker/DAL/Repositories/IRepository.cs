@@ -14,7 +14,7 @@ namespace PictureLiker.DAL.Repositories
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> ListAsync();
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> FromSql(string query, object[] parameters);
+        IEnumerable<T> FromSql(string query, params object[] parameters);
         Task AddAsync(T entity);
         void Add(T entity);
         void Delete(T entity);

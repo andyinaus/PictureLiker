@@ -48,7 +48,7 @@ namespace PictureLiker.DAL.Repositories
                 .ToListAsync();
         }
 
-        public IEnumerable<T> FromSql(string query, object[] parameters)
+        public IEnumerable<T> FromSql(string query, params object[] parameters)
         {
             return _dbContext.Set<T>().FromSql(query, parameters);
         }
