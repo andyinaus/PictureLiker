@@ -20,6 +20,23 @@ namespace PictureLiker.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var picture = await _unitOfWork.PictureRepository.FirstOrDefaultAsync();
+
+            if (picture == null) return View();
+
+            var model = new PictureModel
+            {
+                Id = picture.Id,
+                PictureBytes = picture.Bytes
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
         [Authorize(Roles = RoleTypes.Administrator)]
         public IActionResult Upload()
         {

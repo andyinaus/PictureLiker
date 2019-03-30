@@ -1,0 +1,42 @@
+﻿@model PictureModel
+
+@{
+    ViewBag.Title = "Do You Like This Picture?";
+    Layout = "_Layout";
+
+    
+}
+
+<h2 class="text-center">Do You Like This Picture?</h2>
+
+@if (Model == null)
+{
+    <div class="alert alert-primary" role="alert">
+        There is no more picture available at the moment, please wait till new pictures arrived.
+    </div>
+}
+else
+{
+    var base64 = Convert.ToBase64String(Model.PictureBytes);
+    var imgSrc = $"data:image/gif;base64, {base64}";
+
+    <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-8">
+                <div class="card">
+                    <img class="img-fluid"  src="@imgSrc" alt="Card image cap">
+                    <div class="card-body">
+                        <form class="float-left" asp-action="" method="post">
+                            <button type="submit" class="btn btn-danger">Dislike</button>
+                        </form>
+                        <form class="float-right" asp-action="" method="post">
+                            <button type="submit" class="btn btn-success">Like</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+}
