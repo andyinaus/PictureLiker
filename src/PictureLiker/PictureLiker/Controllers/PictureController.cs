@@ -37,16 +37,38 @@ namespace PictureLiker.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Like(PictureModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
-            if (await IsPictureLiked(model.Id))
+            if (await IsPictureRated(model.Id))
             {
                 return RedirectToAction("Index");
             }
 
-            var preference = new Preference(User.GetUserId(), model.Id);
+            var preference = new Preference(User.GetUserId(), model.Id)
+                .SetIsLiked(true);
+            await _unitOfWork.PreferenceRepository.AddAsync(preference);
+            await _unitOfWork.SaveAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DisLike(PictureModel model)
+        {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            if (await IsPictureRated(model.Id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var preference = new Preference(User.GetUserId(), model.Id)
+                .SetIsLiked(false);
             await _unitOfWork.PreferenceRepository.AddAsync(preference);
             await _unitOfWork.SaveAsync();
 
@@ -97,7 +119,7 @@ namespace PictureLiker.Controllers
             return View("Upload");
         }
 
-        private async Task<bool> IsPictureLiked(int pictureId)
+        private async Task<bool> IsPictureRated(int pictureId)
         {
             return await _unitOfWork.PreferenceRepository.FirstOrDefaultAsync(p => p.PictureId == pictureId && p.UserId == User.GetUserId()) != null;
         }
