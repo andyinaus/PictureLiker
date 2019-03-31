@@ -36,21 +36,33 @@ namespace PictureLiker.DAL.Repositories
             return _dbContext.Set<T>().FirstOrDefault(predicate);
         }
 
-        public async Task<IEnumerable<T>> ListAsync()
+
+        public async Task<IList<T>> ListAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IList<T>> ListAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbContext.Set<T>()
                 .Where(predicate)
                 .ToListAsync();
         }
 
+        public IEnumerable<T> TakeAtPage(int page, int numberOfRecordsPerPage, Expression<Func<T, bool>> predicate)
+        {
+            if (page <= 0) throw new ArgumentException("Invalid page number - must be greater than 0.", nameof(page));
+
+            return _dbContext.Set<T>()
+                .Where(predicate)
+                .Skip(numberOfRecordsPerPage * (page - 1))
+                .Take(numberOfRecordsPerPage)
+                .AsEnumerable();
+        }
+
         public IEnumerable<T> FromSql(string query, params object[] parameters)
         {
-            return _dbContext.Set<T>().FromSql(query, parameters);
+            return _dbContext.Set<T>().FromSql(query, parameters).AsEnumerable();
         }
 
         public async Task AddAsync(T entity)

@@ -12,11 +12,12 @@ namespace PictureLiker.DAL.Repositories
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         Task<T> FirstOrDefaultAsync();
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
-        Task<IEnumerable<T>> ListAsync();
-        Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate);
+        Task<IList<T>> ListAsync();
+        Task<IList<T>> ListAsync(Expression<Func<T, bool>> predicate);
         IEnumerable<T> FromSql(string query, params object[] parameters);
-        Task AddAsync(T entity);
+        IEnumerable<T> TakeAtPage(int page, int numberOfRecordsPerPage, Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        Task AddAsync(T entity);
         void Delete(T entity);
         void Edit(T entity);
     }
