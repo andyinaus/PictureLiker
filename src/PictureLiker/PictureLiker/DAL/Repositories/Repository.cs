@@ -84,5 +84,10 @@ namespace PictureLiker.DAL.Repositories
         {
             _dbContext.Update(entity);
         }
+
+        public long LongCount(Expression<Func<T, bool>> predicate)
+        {
+            return _dbContext.Set<T>().Where(predicate).LongCount();
+        }
     }
 }

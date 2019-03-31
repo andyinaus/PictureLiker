@@ -20,6 +20,7 @@ namespace PictureLiker.DAL.Repositories
         Task AddAsync(T entity);
         void Delete(T entity);
         void Edit(T entity);
+        long LongCount(Expression<Func<T, bool>> predicate);
     }
 
     public abstract class EntityBase
