@@ -1,0 +1,44 @@
+﻿@model PreferencesModel
+
+@{
+    ViewBag.Title = "Preferences History";
+    Layout = "_Layout";
+}
+
+<h2 class="text-center">Preferences History</h2>
+
+@if (Model == null || !Model.Preferences.Any())
+{
+    <div class="alert alert-primary" role="alert">
+        This is no preferences history ...
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var preference in Model.Preferences)
+            {
+                var base64 = Convert.ToBase64String(preference.PictureBytes);
+                var imgSrc = $"data:image/gif;base64, {base64}";
+                <div class="col-sm-3 mb-2">
+                    <div class="card">
+                        <img class="img-fluid" src="@imgSrc" alt="Card image cap">
+                        <div class="card-body text-center">
+                            @if (preference.IsLiked)
+                            {
+                                <i style="color: red" class="fa fa-heart fa-3x"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-times fa-3x"></i>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+    </div>
+}
