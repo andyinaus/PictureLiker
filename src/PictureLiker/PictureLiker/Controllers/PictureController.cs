@@ -42,6 +42,7 @@ namespace PictureLiker.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Like(PictureModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
@@ -61,6 +62,7 @@ namespace PictureLiker.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisLike(PictureModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));

@@ -27,14 +27,16 @@ else
                     <img class="img-fluid"  src="@imgSrc" alt="Card image cap">
                     <div class="card-body">
                         <form class="float-left" asp-action="DisLike" method="post">
-                            <input type="hidden" asp-for="Id" />
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="Id"/>
                             <button type="submit" class="btn" style="color: grey"
                                     onmouseout="this.style.color = 'grey';"
                                     onmouseover="this.style.color = 'black';">
                                 <i class="fa fa-times fa-3x"></i>
                             </button>
                         </form>
-                        <form class="float-right"asp-action="Like" method="post">
+                        <form class="float-right" asp-action="Like" method="post">
+                            @Html.AntiForgeryToken()
                             <input type="hidden" asp-for="Id" />
                             <button type="submit" class="btn" style="color: grey"
                                     onmouseout="this.style.color = 'grey';"
