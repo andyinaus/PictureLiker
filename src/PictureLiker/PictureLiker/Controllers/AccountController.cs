@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens.Saml;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
+using PictureLiker.DAL.Entities;
 using PictureLiker.Extensions;
 using PictureLiker.Factories;
 using PictureLiker.Models;
-using PictureLiker.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,11 +20,10 @@ namespace PictureLiker.Controllers
 {   //TODO: Unit Tests
     public class AccountController : Controller
     {
-        private readonly IDomainQuery _domainQuery;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntityFactory _entityFactory;
 
-        public AccountController(IUnitOfWork unitOfWork, IEntityFactory entityFactory, IDomainQuery domainQuery)
+        public AccountController(IUnitOfWork unitOfWork, IEntityFactory entityFactory)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _entityFactory = entityFactory ?? throw new ArgumentNullException(nameof(entityFactory));

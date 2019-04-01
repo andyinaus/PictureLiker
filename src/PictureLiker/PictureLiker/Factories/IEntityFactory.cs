@@ -1,4 +1,4 @@
-﻿using PictureLiker.DAL;
+﻿using PictureLiker.DAL.Entities;
 
 namespace PictureLiker.Factories
 {

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using PictureLiker.DAL.Repositories;
 
-namespace PictureLiker.DAL
+namespace PictureLiker.DAL.Entities
 {
     public class Picture : EntityBase
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PictureLiker.DAL.Entities;
 
 namespace PictureLiker.DAL.Repositories
 {   //TODO: Unit Tests

@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Moq;
 using PictureLiker.DAL;
+using PictureLiker.DAL.Entities;
 using PictureLiker.DAL.Repositories;
 using PictureLiker.Services;
 using Xunit;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PictureLiker.Authentication;
 using PictureLiker.DAL;
+using PictureLiker.DAL.Entities;
 using PictureLiker.Extensions;
 using PictureLiker.Factories;
 using PictureLiker.Models;

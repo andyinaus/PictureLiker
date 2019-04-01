@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PictureLiker.DAL.Entities;
 using PictureLiker.DAL.Repositories;
 
 namespace PictureLiker.DAL

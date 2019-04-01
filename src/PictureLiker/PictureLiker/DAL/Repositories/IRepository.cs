@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using PictureLiker.DAL.Entities;
 
 namespace PictureLiker.DAL.Repositories
 {
@@ -21,11 +21,5 @@ namespace PictureLiker.DAL.Repositories
         void Delete(T entity);
         void Edit(T entity);
         long LongCount(Expression<Func<T, bool>> predicate);
-    }
-
-    public abstract class EntityBase
-    {
-        [Key]
-        public int Id { get; private set; }
     }
 }

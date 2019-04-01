@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PictureLiker.DAL.Entities;
 
 namespace PictureLiker.DAL
 {

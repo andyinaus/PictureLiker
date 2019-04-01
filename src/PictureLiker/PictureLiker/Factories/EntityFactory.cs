@@ -1,5 +1,5 @@
 ﻿using System;
-using PictureLiker.DAL;
+using PictureLiker.DAL.Entities;
 using PictureLiker.Services;
 
 namespace PictureLiker.Factories

@@ -2,12 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
-using PictureLiker.DAL.Repositories;
 using PictureLiker.Exceptioons;
 using PictureLiker.Extensions;
 using PictureLiker.Services;
 
-namespace PictureLiker.DAL
+namespace PictureLiker.DAL.Entities
 {
     [Table("Users")]
     public class User : EntityBase

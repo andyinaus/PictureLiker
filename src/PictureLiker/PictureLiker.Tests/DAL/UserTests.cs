@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using Xunit;
-using PictureLiker.DAL;
+using PictureLiker.DAL.Entities;
 using PictureLiker.Services;
 
 namespace PictureLiker.Tests.DAL
