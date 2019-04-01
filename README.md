@@ -1,6 +1,6 @@
 # PictureLiker
 
-This demo is built as a MVC project.
+This demo for Careerhub interview is built as a MVC project.
 
 ## Getting Started
 
