@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
-{
+{   //TODO: Unit Tests
     public class HomeController : Controller
     {
         [Authorize]

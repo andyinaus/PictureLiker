@@ -4,6 +4,7 @@ using System.Security.Claims;
 
 namespace PictureLiker.Extensions
 {
+    //TODO: Unit Tests
     public static class ClaimsPrincipalExtensions
     {
         public static int GetUserId(this ClaimsPrincipal principal)

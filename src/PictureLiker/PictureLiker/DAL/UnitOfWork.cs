@@ -4,6 +4,7 @@ using PictureLiker.DAL.Repositories;
 
 namespace PictureLiker.DAL
 {
+    //TODO: Unit Tests
     public class UnitOfWork : IUnitOfWork
     {
         private readonly PictureLikerContext _dbContext;

@@ -3,7 +3,7 @@
 namespace PictureLiker.Models
 {
     public class PreferencesModel
-    {
+    {   //TODO: Unit Tests
         //TODO: Consider making 'below const' configurable, ways: appsettings or database
         public const int DefaultRecordsPerPage = 10;
 

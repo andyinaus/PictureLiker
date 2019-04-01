@@ -7,7 +7,7 @@ using PictureLiker.Extensions;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
-{
+{   //TODO: Unit Tests
     public class PreferenceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

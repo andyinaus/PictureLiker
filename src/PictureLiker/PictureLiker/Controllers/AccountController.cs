@@ -17,7 +17,7 @@ using PictureLiker.Services;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PictureLiker.Controllers
-{
+{   //TODO: Unit Tests
     public class AccountController : Controller
     {
         private readonly IDomainQuery _domainQuery;

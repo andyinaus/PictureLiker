@@ -11,7 +11,7 @@ using PictureLiker.Factories;
 using PictureLiker.Models;
 
 namespace PictureLiker.Controllers
-{
+{   //TODO: Unit Tests
     public class PictureController : Controller
     {
         private readonly IEntityFactory _entityFactory;
