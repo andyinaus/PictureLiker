@@ -1,13 +1,13 @@
 ﻿@model PreferencesModel
 
 @{
-    ViewBag.Title = "Preferences History";
+    ViewBag.Title = "PreferencesWithPagination History";
     Layout = "_Layout";
 }
 
-<h2 class="text-center">Preferences History</h2>
+<h2 class="text-center">PreferencesWithPagination History</h2>
 
-@if (Model == null || !Model.Preferences.Any())
+@if (Model?.PreferencesWithPagination == null || Model.PreferencesWithPagination.TotalItems == 0)
 {
     <div class="alert alert-primary" role="alert">
         This is no preferences history ...
@@ -15,9 +15,57 @@
 }
 else
 {
+    var remainingPageItems = PreferencesModel.DefaultMaximumPagesDisplayed;
     <div class="container-fluid">
         <div class="row">
-            @foreach (var preference in Model.Preferences)
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item @(Model.PreferencesWithPagination.Page > 1 ? "" : "disabled")">
+                        <form asp-action="Search" method="get">
+                            <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@(Model.PreferencesWithPagination.Page - 1)" />
+                            <button class="page-link" type="submit" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </button>
+                        </form>
+                    </li>
+                    @for (var j = remainingPageItems - (Model.PreferencesWithPagination.TotalPages - Model.PreferencesWithPagination.Page + 1); j > 0; j--)
+                    {
+                        var pageNumber = Model.PreferencesWithPagination.Page - j;
+                        <li class="page-item">
+                            <form asp-action="Search" method="get">
+                                <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@pageNumber" />
+                                <button class="page-link" type="submit">@pageNumber</button>
+                            </form>
+                        </li>
+                        remainingPageItems--;
+                    }
+
+                    @for (var i = Model.PreferencesWithPagination.Page; i <= Model.PreferencesWithPagination.TotalPages && remainingPageItems > 0; i++)
+                    {
+                        <li class="page-item @(i == Model.PreferencesWithPagination.Page ? "active" : "")">
+                            <form asp-action="Search" method="get">
+                                <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@i" />
+                                <button class="page-link" type="submit">@i</button>
+                            </form>
+                        </li>
+                        remainingPageItems--;
+                    }
+
+                    <li class="page-item @(Model.PreferencesWithPagination.Page < Model.PreferencesWithPagination.TotalPages ? "" : "disabled")">
+                        <form asp-action="Search" method="get">
+                            <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@(Model.PreferencesWithPagination.Page + 1)" />
+                            <button class="page-link" type="submit" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row">
+            @foreach (var preference in Model.PreferencesWithPagination.ItemsAtCurrentPage)
             {
                 var base64 = Convert.ToBase64String(preference.PictureBytes);
                 var imgSrc = $"data:image/gif;base64, {base64}";
@@ -36,8 +84,6 @@ else
                         </div>
                     </div>
                 </div>
-
-
             }
         </div>
     </div>

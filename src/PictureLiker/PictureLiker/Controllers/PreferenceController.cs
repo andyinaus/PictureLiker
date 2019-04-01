@@ -19,21 +19,29 @@ namespace PictureLiker.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(PreferencesModel model = null)
         {
-            //TODO: pagination 
-            var preferences = _unitOfWork.PreferenceRepository.TakeAtPage(1, 10, p => p.UserId == User.GetUserId());
+            model = model ?? new PreferencesModel();
+
+            var userId = User.GetUserId();
+            var preferences = _unitOfWork.PreferenceRepository.TakeAtPage(model.SearchCriteria.RequestedPage, PreferencesModel.DefaultRecordsPerPage, p => p.UserId == userId);
 
             var preferencesWithPicture = preferences.ToList().Select(p => new PicturePreference
             {
                 PictureId = p.PictureId,
                 IsLiked = p.IsLiked,
                 PictureBytes = _unitOfWork.PictureRepository.FirstOrDefault(pic => pic.Id == p.PictureId)?.Bytes
-            }).ToList();
+            }).ToArray();
 
             return View(new PreferencesModel
             {
-                Preferences = preferencesWithPicture
+                PreferencesWithPagination = new DataWithPagination<PicturePreference>
+                {
+                    ItemsAtCurrentPage = preferencesWithPicture,
+                    Page = model.SearchCriteria.RequestedPage,
+                    RecordsPerPage = PreferencesModel.DefaultRecordsPerPage,
+                    TotalItems = _unitOfWork.PreferenceRepository.LongCount(p => p.UserId == userId)
+                }
             });
         }
     }
