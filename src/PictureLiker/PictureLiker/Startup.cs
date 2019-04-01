@@ -14,6 +14,7 @@ using PictureLiker.Services;
 
 namespace PictureLiker
 {
+    //TODO: Configure logging
     public class Startup
     {
         public const string DefaultAuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
