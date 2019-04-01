@@ -31,14 +31,17 @@ else
                     </li>
                     @for (var j = remainingPageItems - (Model.PreferencesWithPagination.TotalPages - Model.PreferencesWithPagination.Page + 1); j > 0; j--)
                     {
-                        var pageNumber = Model.PreferencesWithPagination.Page - j;
-                        <li class="page-item">
-                            <form asp-action="Search" method="get">
-                                <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@pageNumber" />
-                                <button class="page-link" type="submit">@pageNumber</button>
-                            </form>
-                        </li>
-                        remainingPageItems--;
+                        if (Model.PreferencesWithPagination.Page - j >= 1)
+                        {
+                            var pageNumber = Model.PreferencesWithPagination.Page - j;
+                            <li class="page-item">
+                                <form asp-action="Search" method="get">
+                                    <input type="hidden" asp-for="SearchCriteria.RequestedPage" value="@pageNumber" />
+                                    <button class="page-link" type="submit">@pageNumber</button>
+                                </form>
+                            </li>
+                            remainingPageItems--;
+                        }
                     }
 
                     @for (var i = Model.PreferencesWithPagination.Page; i <= Model.PreferencesWithPagination.TotalPages && remainingPageItems > 0; i++)
