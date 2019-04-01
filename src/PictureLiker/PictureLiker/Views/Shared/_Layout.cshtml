@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
 @using PictureLiker.Authentication
+@using PictureLiker.Extensions
 @{
     var isUserAuthenticated = User?.Identity?.IsAuthenticated;
 }
@@ -59,6 +60,7 @@
 
                     @if (isUserAuthenticated == true)
                     {
+                        <span class="mr-2">Hi, @User.GetName()</span>
                         <form asp-action="LogOutAsync" asp-controller="Account" method="post">
                             <button class="btn btn-outline-secondary" type="submit">Sign Out</button>
                         </form>

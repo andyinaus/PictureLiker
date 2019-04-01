@@ -15,5 +15,14 @@ namespace PictureLiker.Extensions
 
             return int.Parse(nameIdentifierClaim.Value);
         }
+
+        public static string GetName(this ClaimsPrincipal principal)
+        {
+            var nameClaim = principal.Claims.FirstOrDefault(c => c.Type.EqualsIgnoreCase(ClaimTypes.Name));
+
+            if (nameClaim == null) throw new ApplicationException("There is no name associated with current user.");
+
+            return nameClaim.Value;
+        }
     }
 }
