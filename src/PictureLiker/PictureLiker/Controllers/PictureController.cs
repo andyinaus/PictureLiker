@@ -92,6 +92,8 @@ namespace PictureLiker.Controllers
         [Authorize(Roles = RoleTypes.Administrator)]
         [RequestSizeLimit(FileConstraints.MaximumTotalFileSizeInBytes)]
         [ValidateAntiForgeryToken]
+        //If uploading large files or the uploading frequency is causing any resource problem, please consider to change the below implementation to upload file(s) 
+        //via streaming. For more details, please refer to https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-2.2
         public async Task<IActionResult> UploadAsync(UploadModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
